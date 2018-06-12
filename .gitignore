@@ -7,4 +7,4 @@
 Homestead.json
 Homestead.yaml
 .env
-/data
+data/
