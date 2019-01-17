@@ -1,65 +1,99 @@
 <?php
-
 namespace App\Exceptions;
 
+use App\Supports\RestfulException;
+use Psr\Log\LoggerInterface;
+use RuntimeException;
 use Exception;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\ValidationException;
+use InvalidArgumentException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
     /**
-     * A list of the exception types that should not be reported.
+     * 不需要报告的异常
      *
      * @var array
      */
     protected $dontReport = [
-        \Illuminate\Auth\AuthenticationException::class,
-        \Illuminate\Auth\Access\AuthorizationException::class,
-        \Symfony\Component\HttpKernel\Exception\HttpException::class,
-        \Illuminate\Database\Eloquent\ModelNotFoundException::class,
-        \Illuminate\Session\TokenMismatchException::class,
-        \Illuminate\Validation\ValidationException::class,
+        RestfulException::class,
+        ValidationException::class
     ];
 
     /**
-     * Report or log an exception.
-     *
-     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
-     *
-     * @param  \Exception  $exception
-     * @return void
+     * 渲染异常到 Http 响应
+     * @param \Illuminate\Http\Request $request
+     * @param Exception $e
+     * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response
      */
-    public function report(Exception $exception)
+    public function render($request, Exception $e)
     {
-        parent::report($exception);
-    }
+        if ($e instanceof RestfulException) {
 
-    /**
-     * Render an exception into an HTTP response.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
-     */
-    public function render($request, Exception $exception)
-    {
-        return parent::render($request, $exception);
-    }
-
-    /**
-     * Convert an authentication exception into an unauthenticated response.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Auth\AuthenticationException  $exception
-     * @return \Illuminate\Http\Response
-     */
-    protected function unauthenticated($request, AuthenticationException $exception)
-    {
-        if ($request->expectsJson()) {
-            return response()->json(['error' => 'Unauthenticated.'], 401);
+        } elseif ($e instanceof NotFoundHttpException) {
+            $e = RestfulException::convertNotFoundException($e);
+        } elseif ($e instanceof RuntimeException || $e instanceof InvalidArgumentException) {
+            $e = RestfulException::convertLaravelException($e);
+        } elseif ($e instanceof ValidationException) {
+            $e = RestfulException::convertValidationException($e);
+        } elseif ($e instanceof HttpException || $e instanceof HttpResponseException) {
+            $e = RestfulException::convertHttpException($e);
+        } else {
+            $e = RestfulException::convertException($e);
         }
 
-        return redirect()->guest('login');
+        return $e->toResponse();
     }
+
+    /**
+     * 渲染异常到控制台输出
+     *
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param \Exception $e
+     */
+    public function renderForConsole($output, Exception $e)
+    {
+        if ($e instanceof ValidationException) {
+            $e = new RuntimeException(
+                $e->validator->errors()->first() ?? $e->getMessage(),
+                $e->getCode(), $e
+            );
+        }
+        parent::renderForConsole($output, $e);
+    }
+
+    /**
+     * 错误报告
+     *
+     * @param Exception $e
+     * @return mixed|void
+     *
+     * @throws Exception
+     */
+    public function report(Exception $e)
+    {
+        if ($this->shouldntReport($e)) {
+            return;
+        }
+
+        if (method_exists($e, 'report')) {
+            return $e->report();
+        }
+
+        try {
+            $logger = $this->container->make(LoggerInterface::class);
+        } catch (Exception $ex) {
+            throw $e;
+        }
+
+        $logger->warning(
+            $e->getMessage(),
+            array_merge($this->context(), ['exception' => $e]
+            ));
+    }
+
 }

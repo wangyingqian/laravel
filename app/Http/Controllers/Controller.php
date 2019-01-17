@@ -2,12 +2,71 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Bus\DispatchesJobs;
+use App\Exceptions\OperateMethodException;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    public function __invoke(Request $request, $type = 'GET')
+    {
+        $methodType = $request->get('type', $type);
+
+        switch (strtoupper($methodType)){
+            case 'GET':
+                $this->get($request);
+                break;
+            case 'ADD':
+                $this->add($request);
+                break;
+            case 'UPDATE':
+                $this->update($request);
+                break;
+            case 'DELETE':
+                $this->update($request);
+                break;
+            default:
+                throw new OperateMethodException('不支持的操作方法');
+        }
+    }
+
+    /**
+     * 查询操作
+     *
+     * @param Request $request
+     */
+    protected function get(Request $request)
+    {
+
+    }
+
+    /**
+     * 新增操作
+     *
+     * @param Request $request
+     */
+    protected function add(Request $request)
+    {
+
+    }
+
+    /**
+     * 更新操作
+     *
+     * @param Request $request
+     */
+    protected function update(Request $request)
+    {
+
+    }
+
+    /**
+     * 删除操作
+     *
+     * @param Request $request
+     */
+    protected function delete(Request $request)
+    {
+
+    }
 }

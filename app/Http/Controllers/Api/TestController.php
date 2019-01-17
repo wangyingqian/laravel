@@ -1,14 +1,7 @@
 <?php
-namespace  App\Http\Controllers;
+namespace  App\Http\Controllers\Api;
 
-
-use App\Events\TestEvent;
-use App\Jobs\Test;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redis;
-
-Class TestController extends Controller
+class TestController extends Controller
 {
     public function index()
     {
@@ -23,6 +16,5 @@ Class TestController extends Controller
 
         return $collection;
     }
-
 
 }
