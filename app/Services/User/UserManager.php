@@ -18,6 +18,6 @@ class UserManager
 
     public function boot()
     {
-        dd(1);
+        dd(123);
     }
 }
