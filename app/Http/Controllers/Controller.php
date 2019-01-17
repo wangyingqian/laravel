@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\OperateMethodException;
+use App\Supports\RestfulRespond;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -14,20 +15,27 @@ class Controller extends BaseController
 
         switch (strtoupper($methodType)){
             case 'GET':
-                $this->get($request);
+                $result = $this->get($request);
                 break;
             case 'ADD':
-                $this->add($request);
+                $result = $this->add($request);
                 break;
             case 'UPDATE':
-                $this->update($request);
+                $result = $this->update($request);
                 break;
             case 'DELETE':
-                $this->update($request);
+                $result = $this->update($request);
                 break;
             default:
                 throw new OperateMethodException('不支持的操作方法');
         }
+
+        return $this->success($result);
+    }
+
+    public function success($data = null)
+    {
+        return RestfulRespond::success($data);
     }
 
     /**
@@ -37,7 +45,6 @@ class Controller extends BaseController
      */
     protected function get(Request $request)
     {
-
     }
 
     /**

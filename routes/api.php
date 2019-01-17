@@ -14,5 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::namespace('Api')->group(function () {
-    Route::any('test', 'TestController');
+    Route::any('test/{type?}', 'TestController');
+
 });

@@ -2,6 +2,7 @@
 
 namespace App\Supports;
 
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Throwable;
 use Symfony\Component\HttpFoundation\JsonResponse;

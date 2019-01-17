@@ -1,9 +1,11 @@
 <?php
 namespace  App\Http\Controllers\Api;
 
+use Illuminate\Http\Request;
+
 class TestController extends Controller
 {
-    public function index()
+    public function get(Request $request)
     {
         $arr = [
             [1,2,3],
@@ -14,7 +16,11 @@ class TestController extends Controller
 
         $collection = collect($arr)->collapse();
 
-        return $collection;
-    }
+        $data = [
+            'message' => '测试成功',
+            'data' => $collection->toArray()
+        ];
 
+        return $data;
+    }
 }
