@@ -18,6 +18,6 @@ class UserManager
 
     public function boot()
     {
-        dd(123);
+       dd($this->dispatcher);
     }
 }

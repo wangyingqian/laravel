@@ -8,7 +8,7 @@ class UserServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('user', function ($app){
-            return new UserManager($app);
+            return new UserManager($app, $app->make('events'));
         });
     }
 
