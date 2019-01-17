@@ -177,7 +177,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        \App\Service\User\UserServiceProvider::class,
+        \App\Services\User\UserServiceProvider::class,
 
 
     ],
