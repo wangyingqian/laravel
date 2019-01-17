@@ -1,5 +1,5 @@
 <?php
-namespace App\Service\User;
+namespace App\Services\User;
 
 use Illuminate\Support\ServiceProvider;
 
