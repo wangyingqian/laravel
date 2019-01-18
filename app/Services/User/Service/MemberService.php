@@ -3,6 +3,7 @@ namespace App\Services\User\Service;
 
 use App\Services\User\BaseService;
 use App\Services\User\Contract\MemberContract;
+use App\Services\User\Event\CreateMember;
 
 /**
  * 会员
@@ -17,6 +18,6 @@ class MemberService extends BaseService implements MemberContract
 {
     public function create()
     {
-        dd('user');
+        $this->dispatch->dispatch(new CreateMember());
     }
 }
