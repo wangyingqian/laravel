@@ -7,18 +7,25 @@ use Illuminate\Foundation\Application;
 
 class BaseService
 {
-    use EventTrait;
 
     protected $app;
 
     protected $dispatcher;
 
+    protected $listeners = [];
+
     public function __construct(Application $app, Dispatcher $dispatcher)
     {
         $this->app = $app;
         $this->dispatcher = $dispatcher;
+    }
 
-        $this->mergeListeners();
+    protected function registerEvent()
+    {
+        foreach ($this->listeners as $listener => $event)
+        {
+
+        }
     }
 
 }
