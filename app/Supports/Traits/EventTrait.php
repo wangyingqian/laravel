@@ -7,11 +7,19 @@ trait  EventTrait
 
     private static $baseListeners = [];
 
+    /**
+     * 获取事件绑定
+     *
+     * @return array
+     */
     public static function getListeners()
     {
         return self::$baseListeners;
     }
 
+    /**
+     * 合并事件绑定
+     */
     protected function mergeListeners()
     {
         self::$baseListeners += $this->listeners;
