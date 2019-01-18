@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::namespace('Api')->group(function () {
-    Route::any('test/{type?}', 'TestController');
+
+    //用户相关路由
+    Route::any('user/{type?}', 'UserController');
 
 });
