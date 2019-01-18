@@ -76,4 +76,9 @@ class Controller extends BaseController
     {
 
     }
+
+    protected function make($abstract)
+    {
+        return app($abstract);
+    }
 }
