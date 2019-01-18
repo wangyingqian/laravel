@@ -37,11 +37,7 @@ class UserManager
 
     protected function event()
     {
-        $listens = [
-            'createMember' => CreateMember::class
-        ];
-
-        foreach ($listens as $listen => $event){
+        foreach (BaseService::getListeners() as $listen => $event){
             $this->dispatcher->listen($event, UserEvent::class.'@'.$listen);
         }
 

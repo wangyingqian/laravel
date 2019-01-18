@@ -16,6 +16,11 @@ use App\Services\User\Event\CreateMember;
  */
 class MemberService extends BaseService implements MemberContract
 {
+
+    protected $listeners = [
+        'createMember' => CreateMember::class
+    ];
+
     public function create()
     {
         $this->dispatch->dispatch(new CreateMember());
