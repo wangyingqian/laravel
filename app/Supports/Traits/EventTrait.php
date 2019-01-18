@@ -1,7 +1,15 @@
 <?php
 namespace App\Supports\Traits;
 
-trait  EventTrait
+/**
+ * 事件
+ *
+ * Class EventTrait
+ *
+ * @package App\Supports\Traits
+ */
+
+trait EventTrait
 {
     protected $listeners = [];
 

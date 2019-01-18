@@ -11,12 +11,12 @@ class BaseService
 
     protected $app;
 
-    protected $dispatch;
+    protected $dispatcher;
 
-    public function __construct(Application $app, Dispatcher $dispatcher = null)
+    public function __construct(Application $app, Dispatcher $dispatcher)
     {
         $this->app = $app;
-        $this->dispatch = $dispatcher;
+        $this->dispatcher = $dispatcher;
 
         $this->mergeListeners();
     }

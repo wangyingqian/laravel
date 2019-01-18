@@ -10,6 +10,7 @@ use Illuminate\Foundation\Application;
 class UserManager
 {
     protected $app;
+
     protected $dispatcher;
 
     public function __construct(Application $app)
@@ -28,6 +29,9 @@ class UserManager
 
     }
 
+    /**
+     * 注册服务
+     */
     protected function register()
     {
         $this->app->singleton(MemberContract::class, function () {
@@ -35,6 +39,9 @@ class UserManager
         });
     }
 
+    /**
+     * 绑定事件
+     */
     protected function event()
     {
         foreach (BaseService::getListeners() as $listen => $event){

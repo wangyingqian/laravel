@@ -23,6 +23,6 @@ class MemberService extends BaseService implements MemberContract
 
     public function create()
     {
-        $this->dispatch->dispatch(new CreateMember());
+        $this->dispatcher->dispatch(new CreateMember());
     }
 }
