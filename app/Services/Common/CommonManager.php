@@ -1,6 +1,7 @@
 <?php
 namespace App\Services\Common;
 
+use App\Services\Common\Contract\WechatInterface;
 use App\Services\Common\Wechat\Wechat;
 use Illuminate\Foundation\Application;
 
@@ -28,7 +29,7 @@ class CommonManager
     protected function register()
     {
         //微信服务
-        $this->app->singleton(Wechat::class, function () {
+        $this->app->singleton(WechatInterface::class, function () {
             return new Wechat($this->app, $this->dispatcher);
         });
     }
