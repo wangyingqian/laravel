@@ -33,12 +33,11 @@ trait EventTrait
 
     protected function dispatchEvent($listener, ...$args)
     {
-        if (!isset($this->listeners[$listener])){
-           return false;
+        if (isset($this->listeners[$listener])){
+            return $this->dispatcher->dispatch(new $this->listeners[$listener](...$args));
         }
 
-        return $this->dispatcher->dispatch(new $this->listeners[$listener](...$args));
+        return true;
     }
-
 
 }
