@@ -1,9 +1,7 @@
 <?php
 namespace App\Services\Common;
 
-use App\Services\Common\Contract\ImageUploadContract;
-use App\Services\Common\Service\ImageUploadService;
-use App\Services\User\Service\StoreService;
+use App\Services\Common\Wechat\Wechat;
 use Illuminate\Foundation\Application;
 
 class CommonManager
@@ -29,9 +27,9 @@ class CommonManager
      */
     protected function register()
     {
-        $this->app->singleton(ImageUploadContract::class, function () {
-
-            return new ImageUploadService($this->app, $this->dispatcher);
+        //微信服务
+        $this->app->singleton(Wechat::class, function () {
+            return new Wechat($this->app, $this->dispatcher);
         });
     }
 

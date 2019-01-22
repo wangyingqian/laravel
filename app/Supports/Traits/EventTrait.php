@@ -1,31 +1,20 @@
 <?php
-namespace App\Services;
+namespace App\Supports\Traits;
 
 use App\Exceptions\ListenerException;
 use Illuminate\Events\Dispatcher;
-use Illuminate\Foundation\Application;
 
-class BaseService
+trait EventTrait
 {
-    protected $app;
-
-    protected $dispatcher;
+    private $dispatcher;
 
     protected $listenerClass;
 
     protected $listeners = [];
 
-    public function __construct(Application $app, Dispatcher $dispatcher = null)
-    {
-        $this->app = $app;
-        $this->dispatcher = $dispatcher;
-
-        $this->registerEvent();
-    }
-
     protected function registerEvent()
     {
-        if (empty($this->listenerClass)){
+        if (empty($this->listenerClass) || empty($this->dispatcher)){
             return true;
         }
 
@@ -33,13 +22,22 @@ class BaseService
             throw new ListenerException('事件监听器定义错误');
         }
 
-        if (!empty($this->dispatcher)){
+        if ($this->dispatcher instanceof Dispatcher){
             foreach ($this->listeners as $listener => $event){
                 $this->dispatcher->listen($event, $this->listenerClass.'@'.$listener);
             }
         }
 
         return true;
+    }
+
+    protected function dispatchEvent($listener, ...$args)
+    {
+        if (!isset($this->listeners[$listener])){
+           return false;
+        }
+
+        return $this->dispatcher->dispatch(new $this->listeners[$listener](...$args));
     }
 
 

@@ -1,14 +1,10 @@
 <?php
 namespace App\Services\User;
 
-use App\Services\User\Contract\AdminContract;
-use App\Services\User\Contract\MemberContract;
-use App\Services\User\Contract\ProxyContract;
-use App\Services\User\Contract\StoreContract;
-use App\Services\User\Service\AdminService;
-use App\Services\User\Service\MemberService;
-use App\Services\User\Service\ProxyService;
-use App\Services\User\Service\StoreService;
+use App\Services\User\Contract\MemberInterface;
+use App\Services\User\Contract\ShopInterface;
+use App\Services\User\Member\Member;
+use App\Services\User\Shop\Shop;
 use Illuminate\Foundation\Application;
 
 class UserManager
@@ -34,22 +30,14 @@ class UserManager
      */
     protected function register()
     {
-        $this->app->singleton(MemberContract::class, function () {
-
-            return new MemberService($this->app, $this->dispatcher);
+        $this->app->singleton(MemberInterface::class, function () {
+            return new Member($this->app, $this->dispatcher);
         });
 
-        $this->app->singleton(StoreContract::class, function () {
-            return new StoreService($this->app, $this->dispatcher);
+        $this->app->singleton(ShopInterface::class, function () {
+            return new Shop($this->app, $this->dispatcher);
         });
 
-        $this->app->singleton(ProxyContract::class, function () {
-            return new ProxyService($this->app, $this->dispatcher);
-        });
-
-        $this->app->singleton(AdminContract::class, function () {
-            return new AdminService($this->app, $this->dispatcher);
-        });
     }
 
 }
