@@ -2,13 +2,11 @@
 namespace App\Services;
 
 use App\Exceptions\ListenerException;
-use http\Exception\RuntimeException;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Foundation\Application;
 
 class BaseService
 {
-
     protected $app;
 
     protected $dispatcher;
