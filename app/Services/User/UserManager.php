@@ -1,12 +1,10 @@
 <?php
 namespace App\Services\User;
 
-use App\Events\UserEvent;
 use App\Services\User\Contract\AdminContract;
 use App\Services\User\Contract\MemberContract;
 use App\Services\User\Contract\ProxyContract;
 use App\Services\User\Contract\StoreContract;
-use App\Services\User\Event\CreateMember;
 use App\Services\User\Service\AdminService;
 use App\Services\User\Service\MemberService;
 use App\Services\User\Service\ProxyService;
