@@ -14,8 +14,8 @@ class CommonServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $userManager = $this->app->make('common.service');
+        $commonManager = $this->app->make('common.service');
 
-        $userManager->boot();
+        $commonManager->boot();
     }
 }
