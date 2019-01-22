@@ -12,6 +12,5 @@ class CreateMember
 {
     public function __construct()
     {
-        dd('event fire');
     }
 }

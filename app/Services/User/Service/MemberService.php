@@ -1,6 +1,7 @@
 <?php
 namespace App\Services\User\Service;
 
+use App\Events\User\UserEvent;
 use App\Services\User\BaseService;
 use App\Services\User\Contract\MemberContract;
 use App\Services\User\Event\CreateMember;
@@ -16,6 +17,7 @@ use App\Services\User\Event\CreateMember;
  */
 class MemberService extends BaseService implements MemberContract
 {
+    protected $listenerClass = UserEvent::class;
 
     protected $listeners = [
         'createMember' => CreateMember::class

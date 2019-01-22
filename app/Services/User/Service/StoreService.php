@@ -1,6 +1,7 @@
 <?php
 namespace App\Services\User\Service;
 
+use App\Events\User\StoreEvent;
 use App\Services\User\BaseService;
 use App\Services\User\Contract\StoreContract;
 
@@ -13,6 +14,8 @@ use App\Services\User\Contract\StoreContract;
  */
 class StoreService extends BaseService implements StoreContract
 {
+    protected $listenerClass = StoreEvent::class;
+
     protected $listeners = [];
 
     public function create()

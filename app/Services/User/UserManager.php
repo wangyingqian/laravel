@@ -27,12 +27,8 @@ class UserManager
 
     public function boot()
     {
-        //注册服务
+        //注册内部服务
         $this->register();
-
-        //注册事件
-        $this->event();
-
     }
 
     /**
@@ -56,17 +52,6 @@ class UserManager
         $this->app->singleton(AdminContract::class, function () {
             return new AdminService($this->app, $this->dispatcher);
         });
-    }
-
-    /**
-     * 绑定事件
-     */
-    protected function event()
-    {
-        foreach (BaseService::getListeners() as $listen => $event){
-            $this->dispatcher->listen($event, UserEvent::class.'@'.$listen);
-        }
-
     }
 
 }
