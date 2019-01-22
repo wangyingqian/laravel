@@ -7,14 +7,14 @@ class UserServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->singleton('user.service', function ($app){
+        $this->app->singleton('user.manager', function ($app){
             return new UserManager($app);
         });
     }
 
     public function boot()
     {
-        $userManager = $this->app->make('user.service');
+        $userManager = $this->app->make('user.manager');
 
         $userManager->boot();
     }
