@@ -180,6 +180,9 @@ return [
         \App\Services\User\UserServiceProvider::class,
         \App\Services\Common\CommonServiceProvider::class,
 
+        //微信服务提供者
+        \Lawechat\WeChatServiceProvider::class,
+
 
     ],
 
