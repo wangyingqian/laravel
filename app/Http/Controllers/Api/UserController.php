@@ -14,8 +14,8 @@ class UserController extends Controller
             'secret' => 'f1c242f4f28f735d4687abb469072axx',
 
         ];
-        $wechat = WeChat::make('official_account', $config)->menugit;
-dd($wechat);
+        $wechat = WeChat::make('official_account', $config);
+
         return $wechat;
         return $this->make(MemberInterface::class)->create();
     }
