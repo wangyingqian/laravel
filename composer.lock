@@ -3090,11 +3090,11 @@
         },
         {
             "name": "lawechat/framework",
-            "version": "2019.1.30.4",
+            "version": "2019.1.31.3",
             "source": {
                 "type": "git",
                 "url": "git@github.com:wangyingqian/Lawechat.git",
-                "reference": "79ea52be3e38b4738b182809a3c77fb055d3ef90"
+                "reference": "1b879eb90aa64627e218cecf6d70e1e91a4f4172"
             },
             "require": {
                 "dragonmantank/cron-expression": "~2.0",
@@ -3157,7 +3157,7 @@
                 "laravel",
                 "wechat"
             ],
-            "time": "2019-01-30T07:47:45+00:00"
+            "time": "2019-01-31T08:24:17+00:00"
         },
         {
             "name": "mockery/mockery",
