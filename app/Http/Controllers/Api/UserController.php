@@ -15,7 +15,7 @@ class UserController extends Controller
 
         ];
         $wechat = WeChat::make('official_account', $config);
-
+dd(123);
         return $wechat;
         return $this->make(MemberInterface::class)->create();
     }
