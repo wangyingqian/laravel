@@ -13,23 +13,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-//        'App\Events\TestEvent' => [
-//            'App\Listeners\TestEventListener',
-//        ],
+        'App\Events\User\UserEvent' => [
+            'App\Listeners\User\TestListener@test',
+        ],
     ];
 
-    protected $subscribe = [
-        'App\Subscribers\TestSubscriber'
-    ];
-    /**
-     * Register any events for your application.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        parent::boot();
-
-        //
-    }
 }
