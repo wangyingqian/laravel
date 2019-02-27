@@ -1,16 +1,22 @@
 <?php
 namespace  App\Http\Controllers\Api;
 
-use App\Events\User\UserEvent;
-use App\Services\User\Contract\MemberInterface;
+use Elasticsearch\Client;
+use Elasticsearch\ClientBuilder;
 use Illuminate\Http\Request;
-use Lawechat\WeChat;
 
 class UserController extends Controller
 {
     public function add(Request $request)
     {
-        $dispatch = app('events');
-        $dispatch->dispatch(new UserEvent());
+        $params = [
+            'index' => 'my_index',
+            'type' => 'my_type',
+            'id' => 'my_id',
+            'body' => ['testField' => 'abc']
+        ];
+
+        $client = ClientBuilder::create()->build();
+
     }
 }
